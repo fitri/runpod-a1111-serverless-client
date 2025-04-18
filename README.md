@@ -6,7 +6,7 @@ This Python script interacts with the Runpod API to generate images based on a g
 ## Prerequisites
 Before you run the script, ensure you have the following:
 
-- Python 3.x installed on your system.
+- Python 3.10.x installed on your system.
 - A **Runpod API key** (stored as an environment variable `KEY_RUNPOD`).
 - Required Python libraries installed via `pip`:
 
