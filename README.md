@@ -4,7 +4,6 @@
 This Python script interacts with the Runpod API to generate images based on a given text prompt. It utilizes the **Runpod AI** to generate realistic images with customizable parameters, such as samplers, image dimensions, and other settings.
 
 ## Prerequisites
-_____
 Before you run the script, ensure you have the following:
 
 - Python 3.x installed on your system.
@@ -19,7 +18,7 @@ Before you run the script, ensure you have the following:
 You can install the required Python packages by running:
 
 ```bash
-pip install requests
+pip install requirements.txt
 ```
 
 ## Setup
