@@ -14,6 +14,13 @@ Before you run the script, ensure you have the following:
   - `random`
   - `time`
   - `os`
+ 
+Module | Description
+requests | To send HTTP requests to the Runpod API.
+base64 | To decode the image data from Base64 format.
+random | For generating random seeds.
+time | For adding delays in the polling process.
+os | For accessing environment variables like the API key.
 
 You can install the required Python packages by running:
 
