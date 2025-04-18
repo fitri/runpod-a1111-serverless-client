@@ -23,7 +23,7 @@ headers = {
 }
 
 prompt = """
-A real life looks photograph with vibrant colors, capturing a striking beautiful slender young woman with medium sized chest with wavy shoulder length dark-brown hair, wearing a japanese anime maid uniform, bending over game cabinet, looking at the screen, in a retro gaming arcade, she have beautiful black eyes with realistic details eye features. She is playing Sonic the Hedgehog with the words "Sonic 2" printed on the game cabinet. The image has a retro, nostalgic quality with characteristic grain and a soft vignette around the edges.
+A real life looks photograph with vibrant colors, pov from the side capturing full body of a striking beautiful young woman with medium-large sized chest with wavy shoulder length dark-brown hair, wearing a japanese anime black and white themed maid style clothes with some laces, bending over game cabinet while looking at the screen, setting in a retro gaming arcade, she have beautiful black eyes with realistic details eye features. She is playing Sonic the Hedgehog with the words "Sonic 2" printed on the game cabinet.
 """
 
 negative_prompt = """
@@ -37,6 +37,7 @@ if random_seed == "":
 else:
     random_seed = random_seed
 
+# Sampler method
 samplers = {
 "01": "DPM++ 2M",
 "02": "DPM++ SDE",
@@ -57,18 +58,22 @@ samplers = {
 "17": "PLMS",
 "18": "UniPC",
 "19": "LCM",
+"20": "random"
 }
 
-samplers = samplers["06"]
-# samplers = samplers[(str(random.randint(0, 19)).zfill(2))]
-print(f"\nUsing sampler: {samplers}")
+# Setting sampler including function to set random sampler
+sampler = samplers["20"]
+if sampler == "random":
+    sampler = samplers[(str(random.randint(0, 19)).zfill(2))]
+
+print(f"\nUsing sampler: {sampler}")
 
 
 data = {
     'input': {
         "prompt": prompt,
         "negative_prompt" : negative_prompt,
-        "sampler_index" : samplers,
+        "sampler_index" : sampler,
         "seed" : random_seed,
         "cfg_scale": 5,
         "width" : 1191,
@@ -106,7 +111,7 @@ if response.status_code == 200:
                 f.write(base64.b64decode(image64))
             print(f"Image saved as {image_name}")
             # pprint(f"Parameters: {parameter}")
-            pprint(yaml.dump(parameter, sort_keys=False))
+            print(yaml.dump(parameter, sort_keys=False, default_style=None))
             print(f"Seed: {random_seed}")
             break
         elif status_data.get('status') == 'FAILED':
