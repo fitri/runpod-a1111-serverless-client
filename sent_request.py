@@ -8,6 +8,9 @@ import time
 import yaml
 import os
 
+# start script timer
+start = time.time()
+
 endpoint_url = {
     "A1111": "https://api.runpod.ai/v2/ednyb1ratn2bvz"
 }
@@ -20,11 +23,11 @@ headers = {
 }
 
 prompt = """
-A real life looks photograph with a purple tint, capturing a striking beautiful slender young woman with medium sized chest with wavy shoulder length brown hair, wearing a cotton black unzipped hoodie and white sleeveless shirt under with red short skirts, looking at the viewer while bendding to play a game in a retro gaming arcade, she have beautiful black eyes with realistic details eye features. She is playing Sonic the Hedgehog with the words "Sonic 2" printed on the game cabinet. The image has a retro, nostalgic quality with characteristic grain and a soft vignette around the edges.
+A real life looks photograph with vibrant colors, capturing a striking beautiful slender young woman with medium sized chest with wavy shoulder length dark-brown hair, wearing a japanese anime maid uniform, bending over game cabinet, looking at the screen, in a retro gaming arcade, she have beautiful black eyes with realistic details eye features. She is playing Sonic the Hedgehog with the words "Sonic 2" printed on the game cabinet. The image has a retro, nostalgic quality with characteristic grain and a soft vignette around the edges.
 """
 
 negative_prompt = """
-extra hands, extra knee, male, cock, 2 people, cameraman, socks, penis
+extra hands, extra knee, male, 2 people, cameraman
 """
 
 random_seed = ""
@@ -70,8 +73,7 @@ data = {
         "cfg_scale": 5,
         "width" : 1191,
         "height" : 842,
-        "steps" : 100,
-
+        "steps" : 100
     }
 }
 
@@ -87,7 +89,10 @@ if response.status_code == 200:
     print("\nWaiting for image to be ready ...")
     result_url = f"{url}/status/{job_id}"
     while True:
-        print("Polling the status ...")
+        # Show elapsed polling time
+        elapsed = int(time.time() - start)
+        print(f"\rPolling... Elapsed: {elapsed}s", end='', flush=True)
+        
         status_response = requests.get(result_url, headers=headers)
         status_data = status_response.json()
 
@@ -100,14 +105,15 @@ if response.status_code == 200:
             with open(f"./images/{image_name}", "wb") as f:
                 f.write(base64.b64decode(image64))
             print(f"Image saved as {image_name}")
-            pprint(f"Parameters: {parameter}")
+            # pprint(f"Parameters: {parameter}")
+            pprint(yaml.dump(parameter, sort_keys=False))
             print(f"Seed: {random_seed}")
             break
         elif status_data.get('status') == 'FAILED':
             print("Error: Image generation failed.")
             break
 
-        time.sleep(5)  # Wait 5 seconds before polling again
+        time.sleep(1)  # Wait 5 seconds before polling again
 
 else:
     print(f"Error: {response.status_code}, {response.text}")
