@@ -23,7 +23,7 @@ headers = {
 }
 
 prompt = """
-A real life looks photograph with vibrant colors, pov from the side capturing full body of a striking beautiful young woman with medium-large sized chest with wavy shoulder length dark-brown hair, wearing a japanese anime black and white themed maid style clothes with some laces, bending over game cabinet while looking at the screen, setting in a retro gaming arcade, she have beautiful black eyes with realistic details eye features. She is playing Sonic the Hedgehog with the words "Sonic 2" printed on the game cabinet.
+A real life looks photograph with vibrant colors capturing full body of a beautiful young woman with medium-large sized chest with wavy shoulder length dark-brown hair, wearing a japanese anime black and white themed maid style clothes with some laces watching a television in living room, she have beautiful black eyes with realistic details eye features.
 """
 
 negative_prompt = """
@@ -105,7 +105,7 @@ if response.status_code == 200:
             print("Decoding images")
             
             image64 = status_data['output']['data']['images'][0]
-            image_name = f"{samplers}_{job_id[:5]}_{random_seed}.png"
+            image_name = f"{sampler}_{job_id[:5]}_{random_seed}.png"
             parameter = status_data['output']['data']['parameters']
             with open(f"./images/{image_name}", "wb") as f:
                 f.write(base64.b64decode(image64))
